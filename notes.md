@@ -9,3 +9,8 @@ A Controller that handles all the requests for the website.
 
 # Dependency Injection
 
+# Template Renderer
+
+# Service Locator
+
+# Dependency Injector
