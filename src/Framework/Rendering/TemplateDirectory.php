@@ -11,7 +11,7 @@ final class TemplateDirectory
         $this->templateDirectory = $rootDirectory . '/templates';
     }
 
-    public function __toString() : string
+    public function toString() : string
     {
         return $this->templateDirectory;        
     }
