@@ -44,7 +44,6 @@ switch ($routeInfo[0]) {
         [$controllerName, $method] = explode('#', $routeInfo[1]);
         $vars = $routeInfo[2];
         $injector = include('dependencies.php');
-        var_dump($injector); die();
         $controller = $injector->make($controllerName);
         $response = $controller->$method($request, $vars);
         break;
