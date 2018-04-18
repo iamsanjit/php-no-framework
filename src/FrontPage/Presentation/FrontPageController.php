@@ -1,4 +1,4 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace App\FrontPage\Presentation;
 
@@ -17,7 +17,15 @@ final class FrontPageController
 
     public function show(Request $request) : Response
     {
-        $content = $this->templateRenderer->render('FrontPage.html.twig');
+        $submissions = [
+            ['url' => 'https://www.google.com', 'title' => 'Google'],
+            ['url' => 'https://www.github.com', 'title' => 'Github']
+        ];
+
+        $content = $this->templateRenderer->render('FrontPage.html.twig', [
+            'submissions' => $submissions
+        ]);
+        
         return new Response($content);
     }
 }

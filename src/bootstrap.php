@@ -1,8 +1,7 @@
-<?php declare (strict_types = 1);
+<?php declare(strict_types = 1);
 
 use Symfony\Component\HttpFoundation\Request;
 use App\Framework\Rendering\TwigTemplateRendererFactory;
-
 
 define('ROOT_DIR', __DIR__);
 error_reporting(E_ALL);
