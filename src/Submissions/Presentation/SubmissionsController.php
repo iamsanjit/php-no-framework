@@ -4,27 +4,33 @@ namespace App\Submissions\Presentation;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 use App\Framework\Rendering\TemplateRenderer;
 use App\FrontPage\Application\SubmissionsQuery;
 use App\Framework\Csrf\StoredTokenValidator;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Framework\Csrf\Token;
+use App\Submissions\Application\SubmitLinkHandler;
+use App\Submissions\Application\SubmitLink;
 
 final class SubmissionsController
 {
     protected $templateRenderer;
-    protected $storedTokenValidator;
+    protected $submitFormFactory;
     protected $session;
+    protected $submitLinkHandler;
 
     public function __construct(
         TemplateRenderer $templateRenderer,
-        StoredTokenValidator $tokenValidator,
-        SessionInterface $session
+        SubmitFormFactory $submitFormFactory,
+        SessionInterface $session,
+        SubmitLinkHandler $submitLinkHandler
     ) {
         $this->templateRenderer = $templateRenderer;
-        $this->storedTokenValidator = $tokenValidator;
+        $this->submitFormFactory = $submitFormFactory;
         $this->session = $session;
+        $this->submitLinkHandler = $submitLinkHandler;
     }
 
     public function create(Request $request) : Response
@@ -36,14 +42,16 @@ final class SubmissionsController
     public function store(Request $request) : Response
     {
         $response = new RedirectResponse('/submit');
-
-        $token = new Token((string)$request->get('csrf_token'));
-
-        //TODO Add dedicated flash messenger class to framework
-        if (!$this->storedTokenValidator->validate('submission', $token)) {
-            $this->session->getFlashBag()->add('errors', 'Invalid Token');
+        $form = $this->submitFormFactory->createFromRequest($request);
+        
+        if ($form->hasValidationErrors()) {
+            foreach ($form->getValidationErrors() as $errorMessage) {
+                $this->session->getFlashBag()->add('errors', $errorMessage);
+            }
             return $response;
         }
+
+        $this->submitLinkHandler->handle($form->toCommand());
 
         $this->session->getFlashBag()->add('success', 'Your url was submitted successfully');
         return $response;

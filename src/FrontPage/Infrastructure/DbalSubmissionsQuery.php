@@ -4,7 +4,7 @@ namespace App\FrontPage\Infrastructure;
 
 use App\FrontPage\Application\SubmissionsQuery;
 use Doctrine\DBAL\Connection;
-use App\FrontPage\Application\Submisssion;
+use App\FrontPage\Application\Submission;
 
 final class DbalSubmissionsQuery implements SubmissionsQuery
 {
@@ -29,7 +29,7 @@ final class DbalSubmissionsQuery implements SubmissionsQuery
 
         $submissions = [];
         while($row = $stmt->fetch()) {
-            $submissions = new Submisssion($row['title'], $row['url']);
+            $submissions[] = new Submission($row['title'], $row['url']);
         }
         return $submissions;
     }

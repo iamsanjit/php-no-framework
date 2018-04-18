@@ -23,3 +23,6 @@ A Controller that handles all the requests for the website.
 
 # Data Mapper Pattern
 
+# Command pattern
+        - In large projects its a good idea to use Command BUS
+

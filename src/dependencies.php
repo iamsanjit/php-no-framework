@@ -19,6 +19,9 @@ use App\Framework\Csrf\TokenStorage;
 use App\FrontPage\Application\SubmissionsQuery;
 use App\FrontPage\Infrastructure\DbalSubmissionsQuery;
 
+use App\Submissions\Domain\SubmissionRepository;
+use App\Submissions\Domain\DbalSubmissionRepository;
+
 
 $injector = new Injector();
 
@@ -34,6 +37,8 @@ $injector->delegate(
 
 $injector->alias(SubmissionsQuery::class, DbalSubmissionsQuery::class);
 $injector->share(SubmissionsQuery::class);
+
+$injector->alias(SubmissionRepository::class, DbalSubmissionRepository::class);
 
 $injector->define(DatabaseUrl::class, [':url' => 'sqlite:///' . ROOT_DIR . '/storage/db.sqlite3']);
 

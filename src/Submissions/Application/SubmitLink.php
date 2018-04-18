@@ -1,13 +1,13 @@
-<?php declare(strict_types = 1);
-    
-namespace App\FrontPage\Application;
+<?php declare(strict_types=1);
 
-final class Submission
+namespace App\Submissions\Application;
+
+final class SubmitLink
 {
-    private $title;
     private $url;
+    private $title;
 
-    public function __construct(string $title, string $url)
+    public function __construct(string $url, string $title)
     {
         $this->url = $url;
         $this->title = $title;
