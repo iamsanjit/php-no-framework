@@ -3,10 +3,10 @@
 use Symfony\Component\HttpFoundation\Request;
 use App\Framework\Rendering\TwigTemplateRendererFactory;
 
-define('ROOT_DIR', __DIR__);
+define('ROOT_DIR', dirname(__DIR__));
 error_reporting(E_ALL);
 
-require ROOT_DIR . '/../vendor/autoload.php';
+require ROOT_DIR . '/vendor/autoload.php';
 
 \Tracy\Debugger::enable();
 

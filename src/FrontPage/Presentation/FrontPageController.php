@@ -5,25 +5,23 @@ namespace App\FrontPage\Presentation;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Framework\Rendering\TemplateRenderer;
+use App\FrontPage\Application\SubmissionsQuery;
 
 final class FrontPageController
 {
     protected $templateRenderer;
-    
-    public function __construct(TemplateRenderer $templateRenderer)
+    protected $submissionsQuery;
+
+    public function __construct(TemplateRenderer $templateRenderer, SubmissionsQuery $submissionsQuery)
     {
         $this->templateRenderer = $templateRenderer;
+        $this->submissionsQuery = $submissionsQuery;
     }
 
     public function show(Request $request) : Response
     {
-        $submissions = [
-            ['url' => 'https://www.google.com', 'title' => 'Google'],
-            ['url' => 'https://www.github.com', 'title' => 'Github']
-        ];
-
         $content = $this->templateRenderer->render('FrontPage.html.twig', [
-            'submissions' => $submissions
+            'submissions' => $this->submissionsQuery->execute()
         ]);
         
         return new Response($content);
