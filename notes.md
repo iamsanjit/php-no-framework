@@ -16,3 +16,10 @@ A Controller that handles all the requests for the website.
 # Dependency Injector
 
 # Value objects
+
+# ORM patterns
+
+# Active Record Pattern
+
+# Data Mapper Pattern
+

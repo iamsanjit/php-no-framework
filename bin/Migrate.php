@@ -2,6 +2,7 @@
 
 use Doctrine\DBAL\Connection;
 use Migrations\Migration201804151206;
+use App\Framework\Dbal\DatabaseUrl;
 
 define('ROOT_DIR', dirname(__DIR__));
 

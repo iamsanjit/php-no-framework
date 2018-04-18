@@ -10,7 +10,7 @@ final class Migration201804151206
 {
     private $connection;
 
-    public function __constuct(Connection $connection)
+    public function __construct(Connection $connection)
     {
         $this->connection = $connection;
     }

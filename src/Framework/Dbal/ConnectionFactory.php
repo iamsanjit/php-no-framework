@@ -18,7 +18,7 @@ final class ConnectionFactory
     public function create() : Connection
     {
         return DriverManager::getConnection(
-            ['url' => $this->databaseUrl->toString],
+            ['url' => $this->databaseUrl->toString()],
             new Configuration()
         );
     }
