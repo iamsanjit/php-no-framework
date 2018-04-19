@@ -25,5 +25,15 @@ return [
         'POST',
         '/register',
         'App\User\Presentation\RegistrationController#store'
-    ]
+    ],
+    [
+        'GET',
+        '/login',
+        'App\User\Presentation\LoginController#create'
+    ],
+    [
+        'POST',
+        '/login',
+        'App\User\Presentation\LoginController#store'
+    ],
 ];
