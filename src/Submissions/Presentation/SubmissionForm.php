@@ -16,29 +16,35 @@ final class SubmissionForm
 
     public function __construct(
         StoredTokenValidator $storedTokenValidator,
-        string $token,
-        string $title,
-        string $url
+        ?string $token,
+        ?string $title,
+        ?string $url
     ) {
         $this->storedTokenValidator = $storedTokenValidator;
-        $this->token = trim($token);
-        $this->title = trim($title);
-        $this->url = trim($url);
+        $this->token = $token;
+        $this->title = $title;
+        $this->url = $url;
     }
 
     public function getValidationErrors() : array
     {
         $errors = [];
 
-        if (!$this->storedTokenValidator->validate('submission', new Token($this->token))) {
+        if (!$this->token) {
+            $errors[] = 'Token required';
+        } elseif  (!$this->storedTokenValidator->validate('submission', new Token($this->token))) {
             $errors[] = 'Invalid token.';
         }
 
-        if (strlen($this->title) < 1 || strlen($this->title) > 200) {
+        if (!$this->title) {
+            $errors[] = 'Title Required.';
+        } else if (strlen($this->title) < 1 || strlen($this->title) > 200) {
             $errors[] = 'Title must be between 1 and 200 chracters.';
         }
-
-        if (strlen($this->url) < 1 || strlen($this->url) > 200) {
+        
+        if (!$this->url) {
+            $errors[] = 'Url Required.';
+        } else if  (strlen($this->url) < 1 || strlen($this->url) > 200) {
             $errors[] = 'URL must be between 1 and 200 chracters.';
         }
 

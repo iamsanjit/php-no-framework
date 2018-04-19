@@ -1,0 +1,20 @@
+{% extends 'Layout.html.twig' %}
+
+{% block content %}
+
+    {% include 'FlashMessages.html.twig' %}
+
+    <form action="" method="POST">
+        <label>
+            Nickname
+            <input name="nickname" />
+        </label>
+        <label>
+            Password
+            <input type="password" name="password" />
+        </label>
+        <input type="hidden" name="csrf_token" value="{{get_token('registration')}}" />
+        <input type="submit" value="Submit"/>
+    </form>
+
+{% endblock %} 

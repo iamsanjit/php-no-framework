@@ -26,3 +26,5 @@ A Controller that handles all the requests for the website.
 # Command pattern
         - In large projects its a good idea to use Command BUS
 
+# Phinix migrations
+

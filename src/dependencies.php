@@ -22,6 +22,11 @@ use App\FrontPage\Infrastructure\DbalSubmissionsQuery;
 use App\Submissions\Domain\SubmissionRepository;
 use App\Submissions\Domain\DbalSubmissionRepository;
 
+use App\User\Domain\UserRepository;
+use App\User\Infrastructure\DbalUserRepository;
+use App\User\Application\NickNameTakenQuery;
+use App\User\Infrastructure\DbalNickNameTakenQuery;
+
 
 $injector = new Injector();
 
@@ -39,6 +44,9 @@ $injector->alias(SubmissionsQuery::class, DbalSubmissionsQuery::class);
 $injector->share(SubmissionsQuery::class);
 
 $injector->alias(SubmissionRepository::class, DbalSubmissionRepository::class);
+$injector->alias(UserRepository::class, DbalUserRepository::class);
+$injector->alias(NickNameTakenQuery::class, DbalNickNameTakenQuery::class);
+
 
 $injector->define(DatabaseUrl::class, [':url' => 'sqlite:///' . ROOT_DIR . '/storage/db.sqlite3']);
 

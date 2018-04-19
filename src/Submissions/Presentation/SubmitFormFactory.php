@@ -19,7 +19,7 @@ final class SubmitFormFactory
     {
         return new SubmissionForm(
             $this->storedTokenValidator,
-            $request->get('csrf_token'),
+            $request->get('csrf_token'), 
             $request->get('title'),
             $request->get('url')
         );
