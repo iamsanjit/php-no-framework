@@ -27,6 +27,10 @@ use App\User\Infrastructure\DbalUserRepository;
 use App\User\Application\NickNameTakenQuery;
 use App\User\Infrastructure\DbalNickNameTakenQuery;
 
+use App\Framework\Rbac\User;
+use App\Framework\Rbac\CurrentUserFactory;
+use App\Framework\Rbac\SymfonySessionCurrentUserFactory;
+
 
 $injector = new Injector();
 
@@ -39,6 +43,16 @@ $injector->delegate(
         return $factory->create();
     }
 );
+
+$injector->delegate(
+    User::class,
+    function() use ($injector) : User {
+        $factory = $injector->make(CurrentUserFactory::class);
+        return $factory->create();
+    }  
+);
+
+$injector->alias(CurrentUserFactory::class, SymfonySessionCurrentUserFactory::class);
 
 $injector->alias(SubmissionsQuery::class, DbalSubmissionsQuery::class);
 $injector->share(SubmissionsQuery::class);

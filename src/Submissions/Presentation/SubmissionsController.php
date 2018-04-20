@@ -11,6 +11,8 @@ use App\Framework\Rendering\TemplateRenderer;
 use App\FrontPage\Application\SubmissionsQuery;
 use App\Framework\Csrf\StoredTokenValidator;
 use App\Framework\Csrf\Token;
+use App\Framework\Rbac\User;
+use App\Framework\Rbac\Permission;
 use App\Submissions\Application\SubmitLinkHandler;
 use App\Submissions\Application\SubmitLink;
 
@@ -20,27 +22,40 @@ final class SubmissionsController
     protected $submitFormFactory;
     protected $session;
     protected $submitLinkHandler;
+    protected $user;
 
     public function __construct(
         TemplateRenderer $templateRenderer,
         SubmitFormFactory $submitFormFactory,
         SessionInterface $session,
-        SubmitLinkHandler $submitLinkHandler
+        SubmitLinkHandler $submitLinkHandler,
+        User $user
     ) {
         $this->templateRenderer = $templateRenderer;
         $this->submitFormFactory = $submitFormFactory;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
+        $this->user = $user;
     }
 
     public function create(Request $request) : Response
     {
+        if (!$this->user->hasPermission(new Permission\SubmitLink())) {
+            $this->session->getFlashBag()->add('errors', 'You have to login before you submit a link.');
+            return new RedirectResponse('/login');
+        }
+
         $content = $this->templateRenderer->render('Submission.html.twig');
         return new Response($content);
     }
 
     public function store(Request $request) : Response
     {
+        if (!$this->user->hasPermission(new Permission\SubmitLink())) {
+            $this->session->getFlashBag()->add('errors', 'You have to login before you submit a link.');
+            return new RedirectResponse('/login');
+        }
+        
         $response = new RedirectResponse('/submit');
         $form = $this->submitFormFactory->createFromRequest($request);
         

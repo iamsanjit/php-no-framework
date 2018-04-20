@@ -15,13 +15,13 @@ final class Submission
 
     private function __construct(
         UuidInterface $id,
-        string $url,
         string $title,
+        string $url,
         DateTimeImmutable $creationDate
     ) {
         $this->id = $id;
-        $this->url = $url;
         $this->title = $title;
+        $this->url = $url;
         $this->creationDate = $creationDate;
     }
 
