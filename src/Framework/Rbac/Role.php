@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace App\Framework\Dbal;
+namespace App\Framework\Rbac;
 
 use App\Framework\Rbac\Permission;
 

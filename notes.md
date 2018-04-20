@@ -31,3 +31,21 @@ A Controller that handles all the requests for the website.
 # Role Based Access Control
 
 # Attribute Based Access Control
+
+# CQRS
+
+# DDD
+
+# Command Bus
+        - Login 
+        - Database Transactions
+        - Error Handling
+        - Queueing
+        - Authorization
+
+# Resources
+Youtube: Models & Service Layers; Hemoglobin & Hobgoblins
+https://matthiasnoback.nl/
+Youtube: The Clean Code Talks - Unit Testing
+TDD
+http://verraes.net/2014/12/how-much-testing-is-too-much/

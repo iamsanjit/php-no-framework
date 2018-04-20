@@ -2,7 +2,8 @@
 
 namespace App\Framework\Rbac\Role;
 
-use App\Framework\Dbal\Role;
+use App\Framework\Rbac\Role;
+use App\Framework\Rbac\Permission\SubmitLink;
 
 final class Author extends Role
 {

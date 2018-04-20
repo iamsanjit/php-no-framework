@@ -9,17 +9,20 @@ use Ramsey\Uuid\Uuid;
 final class Submission
 {
     private $id;
+    private $authorId;
     private $url;
     private $title;
     private $creationDate;
 
     private function __construct(
         UuidInterface $id,
+        AuthorId $authorId,
         string $title,
         string $url,
         DateTimeImmutable $creationDate
     ) {
         $this->id = $id;
+        $this->authorId = $authorId;
         $this->title = $title;
         $this->url = $url;
         $this->creationDate = $creationDate;
@@ -28,6 +31,11 @@ final class Submission
     public function getId() : UuidInterface
     {
         return $this->id;
+    }
+
+    public function getAuthorId() : AuthorId
+    {
+        return $this->authorId;
     }
 
     public function getUrl() : string
@@ -45,10 +53,11 @@ final class Submission
         return $this->creationDate;
     }
 
-    public static function submit(string $title, string $url) : Submission
+    public static function submit(UuidInterface $authorId, string $title, string $url) : Submission
     {
         return new Submission(
             Uuid::uuid4(),
+            AuthorId::fromUuid($authorId),
             $url,
             $title,
             new DateTimeImmutable()

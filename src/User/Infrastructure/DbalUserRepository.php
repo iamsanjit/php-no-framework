@@ -102,7 +102,7 @@ final class DbalUserRepository implements UserRepository
         }
 
         return new User(
-            Uuid::uuid4($row['id']),
+            Uuid::fromString($row['id']),
             $row['nickname'],
             $row['password_hash'],
             new DateTimeImmutable($row['creation_date']),

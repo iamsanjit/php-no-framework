@@ -15,6 +15,7 @@ use App\Framework\Rbac\User;
 use App\Framework\Rbac\Permission;
 use App\Submissions\Application\SubmitLinkHandler;
 use App\Submissions\Application\SubmitLink;
+use App\Framework\Rbac\AuthenticatedUser;
 
 final class SubmissionsController
 {
@@ -55,7 +56,7 @@ final class SubmissionsController
             $this->session->getFlashBag()->add('errors', 'You have to login before you submit a link.');
             return new RedirectResponse('/login');
         }
-        
+
         $response = new RedirectResponse('/submit');
         $form = $this->submitFormFactory->createFromRequest($request);
         
@@ -66,7 +67,11 @@ final class SubmissionsController
             return $response;
         }
 
-        $this->submitLinkHandler->handle($form->toCommand());
+        if (!$this->user instanceof AuthenticatedUser) {
+            throw new \LogicException('Only authenticated users can submit links');
+        }
+        
+        $this->submitLinkHandler->handle($form->toCommand($this->user));
 
         $this->session->getFlashBag()->add('success', 'Your url was submitted successfully');
         return $response;

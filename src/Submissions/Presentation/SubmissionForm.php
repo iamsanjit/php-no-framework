@@ -5,6 +5,7 @@ namespace App\Submissions\Presentation;
 use App\Framework\Csrf\StoredTokenValidator;
 use App\Submissions\Application\SubmitLink;
 use App\Framework\Csrf\Token;
+use App\Framework\Rbac\AuthenticatedUser;
 
 
 final class SubmissionForm
@@ -56,8 +57,8 @@ final class SubmissionForm
         return (count($this->getValidationErrors()) > 0);
     }
 
-    public function toCommand() : SubmitLink
+    public function toCommand(AuthenticatedUser $author) : SubmitLink
     {
-        return new SubmitLink($this->url, $this->title);
+        return new SubmitLink($author->getId(), $this->url, $this->title);
     }
 }

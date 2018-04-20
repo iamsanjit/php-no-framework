@@ -25,4 +25,9 @@ final class AuthenticatedUser implements User
         }
         return false;
     }
+
+    public function getId() : UuidInterface
+    {
+        return $this->id;
+    }
 }
